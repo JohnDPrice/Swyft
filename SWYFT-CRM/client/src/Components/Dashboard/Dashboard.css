@@ -1,0 +1,14 @@
+.dashboard-lead-table {
+    display: flex;
+    justify-content:flex-end;
+}
+
+.dashboard-client-table {
+    display: flex;
+    justify-content:flex-end;
+}
+
+.line-chart {
+display: flex;
+justify-content: center;
+}
