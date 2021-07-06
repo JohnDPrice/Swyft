@@ -14,7 +14,7 @@ import { LeadContext } from "../../providers/LeadProvider";
 
 const AppointmentForm = () => {
     const { addAppointment, getAppointment, updateAppointment, getAllAppointments } = useContext(AppointmentContext);
-    const { getAllLeads } = useContext(LeadContext);
+    const { leads, getAllLeads } = useContext(LeadContext);
     const [appointmentInput, setAppointmentInput] = useState({});
     const userProfileId = JSON.parse(sessionStorage.getItem("userProfile")).id;
 
@@ -26,12 +26,12 @@ const AppointmentForm = () => {
 
     useEffect(() => {
         getAllAppointments()
-        getAllLeads
+        getAllLeads()
         .then(() => {
             if (appointmentId) {
               getAppointment(appointmentId)
-              .then(lead  => {
-                setAppointAppointmentInput(appointment)
+              .then(appointment  => {
+                setAppointmentInput(appointment)
                 setIsLoading(false)
               })
             } else {
@@ -110,11 +110,11 @@ const AppointmentForm = () => {
                 </FormGroup>
                 <FormGroup>
                   <Label for="start">Last Name</Label>
-                  <Input type="text" id="start" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Last Name" value={leadInput.lastName} />
+                  <Input type="text" id="start" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Last Name" value={appointmentInput.lastName} />
                 </FormGroup>
                 <FormGroup>
                   <Label for="email">Email</Label>
-                  <Input type="text" id="email" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Email" value={leadInput.email} />
+                  <Input type="text" id="email" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Email" value={appointmentInput.email} />
                 </FormGroup>
                 {/* <FormGroup>
                   <Label for="content" name="dateOfBirth">Date Of Birth</Label>
@@ -124,18 +124,18 @@ const AppointmentForm = () => {
                 </FormGroup> */}
                 <FormGroup>
                       <Label for="exampleSelectMulti">Lead Status</Label>
-                      <Input type="select" value={leadInput.leadStatusId}
+                      <Input type="select" value={appointmentInput.leadStatusId}
                           name="leadStatusId"
                           id="leadStatusId"
                           onChange={handleControlledInputChange}
                           required>
                             <option>Select a lead status</option>
-                          {leadStatuses.map((leadStatus) => (
-                          leadStatus.id === leadInput.leadStatusId? <option key={leadStatus.id} selected value={leadStatus.id}>{leadStatus.name}</option> : <option key={leadStatus.id} value={leadStatus.id}>{leadStatus.name}</option>
+                          {leads.map((lead) => (
+                          lead.id === appointmentInput.leadStatusId? <option key={lead.id} selected value={lead.id}>{lead.fullName}</option> : <option key={lead.id} value={lead.id}>{lead.fullName}</option>
                           ))}
                       </Input>
                 </FormGroup>
-                <FormGroup>
+                {/* <FormGroup>
                       <Label for="exampleSelectMulti">Coverage Type</Label>
                       <Input type="select" value={leadInput.coverageTypeId}
                           name="coverageTypeId"
@@ -147,7 +147,7 @@ const AppointmentForm = () => {
                           coverageType.id === leadInput.coverageTypeId? <option key={coverageType.id} selected value={coverageType.id}>{coverageType.name}</option> : <option key={coverageType.id} value={coverageType.id}>{coverageType.name}</option>
                           ))}
                       </Input>
-                </FormGroup>
+                </FormGroup> */}
               </Form>
               <Button  onClick={handleClickSaveLead} disable={isLoading.toString()}>
                     {appointmentId ? <>Save Lead</> : <>Add Lead</>}

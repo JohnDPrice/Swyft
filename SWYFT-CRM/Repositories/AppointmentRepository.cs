@@ -70,11 +70,11 @@ namespace SWYFT_CRM.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT  a.Id, a.Title, a.[Start], a.[End], a.Notes, a.LeadId as LeadId, a.UserProfileId AS UserProfileId, l.firstName as LeadFirstName, l.lastName AS LeadLastName, u.LastName
+                        SELECT  a.Id as AppointmentId, a.Title, a.[Start], a.[End], a.Notes, a.LeadId as LeadId, a.UserProfileId as UserProfileId, l.firstName as LeadFirstName, l.lastName as LeadLastName, u.FirstName as UserFirstName, u.LastName as UserLastName
                         FROM Appointment a
                         LEFT JOIN Lead l on a.LeadId = l.Id
                         LEFT JOIN UserProfile u on a.UserProfileId = u.Id
-                        WHERE Id = @Id;
+                        WHERE a.Id = @Id;
                     ";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
@@ -85,7 +85,7 @@ namespace SWYFT_CRM.Repositories
                     {
                         appointment = new Appointment()
                         {
-                            Id = id,
+                            Id = DbUtils.GetInt(reader, "AppointmentId"),
                             Title = DbUtils.GetString(reader, "Title"),
                             Start = DbUtils.GetNullableDateTime(reader, "Start"),
                             End = DbUtils.GetNullableDateTime(reader, "End"),
@@ -101,8 +101,8 @@ namespace SWYFT_CRM.Repositories
                             UserProfile = new UserProfile()
                             {
                                 Id = DbUtils.GetInt(reader, "UserProfileId"),
-                                FirstName = DbUtils.GetString(reader, "FirstName"),
-                                LastName = DbUtils.GetString(reader, "LastName")
+                                FirstName = DbUtils.GetString(reader, "UserFirstName"),
+                                LastName = DbUtils.GetString(reader, "UserLastName")
                             }
                         };
                     }

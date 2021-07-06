@@ -6,7 +6,7 @@ export const LeadContext = React.createContext();
 
 export const LeadProvider = (props) => {
   const [leads, setLeads] = useState([]);
-  const [searchLead, setSearchLead] = useState("")
+  const [searchTerms, setSearchTerms] = useState("");
   const userProfile = JSON.parse(sessionStorage.getItem("userProfile"));
   const getToken = () => firebase.auth().currentUser.getIdToken();
 
@@ -52,12 +52,6 @@ export const LeadProvider = (props) => {
     }))       
 }
 
-  const findLead = (q) => {
-    return fetch(`${apiUrl}/search?q=${q}&sortDesc=true`)
-    .then((res) => res.json())
-    .then(setLeads)
-  }
-
   const getLead = (id) => {
       return getToken().then((token) => 
       fetch(`${apiUrl}/${id}`, {
@@ -92,7 +86,7 @@ export const LeadProvider = (props) => {
   }
 
   return (
-    <LeadContext.Provider value={{ leads, getAllLeads, addLead, searchLead, setSearchLead, findLead, getLead, getCurrentUserLeads, deleteLead, updateLead }}>
+    <LeadContext.Provider value={{ leads, getAllLeads, addLead, getLead, getCurrentUserLeads, deleteLead, updateLead, searchTerms, setSearchTerms }}>
       {props.children}
     </LeadContext.Provider>
   );

@@ -62,7 +62,7 @@ const Client = ({ client }) => {
         </CardBody>
     </Card> */}
     <tr>
-        <th scope="row" onClick={onClickToDetails}>1</th>
+        <th scope="row" onClick={onClickToDetails}>{client.id}</th>
         <td onClick={onClickToDetails}>{client.firstName}</td>
         <td onClick={onClickToDetails}>{client.lastName}</td>
         <td onClick={onClickToDetails}>{client.email}</td>

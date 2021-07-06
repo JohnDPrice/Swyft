@@ -22,7 +22,6 @@ const Lead = ({ lead }) => {
   }
 
   const toggle = () => setModal(!modal);
-  console.log(lead.leadStatus.name)
 
   return (
     <>
@@ -62,7 +61,7 @@ const Lead = ({ lead }) => {
         </CardBody>
     </Card> */}
      <tr>
-        <th scope="row" onClick={handleClickToDetails}>1</th>
+        <th scope="row" onClick={handleClickToDetails}>{lead.id}</th>
         <td onClick={handleClickToDetails}>{lead.firstName}</td>
         <td onClick={handleClickToDetails}>{lead.lastName}</td>
         <td onClick={handleClickToDetails}>{lead.email}</td>
