@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { LeadContext } from "../../providers/LeadProvider";
 import { Container, Button, Row, Col, Media, Table } from "reactstrap";
 import { useHistory } from "react-router-dom"
@@ -6,12 +6,22 @@ import Lead from "./Lead"
 
 const LeadList = () => {
 
-    const { leads, getAllLeads } = useContext(LeadContext);
+    const { leads, getAllLeads, searchTerms, setSearchTerms } = useContext(LeadContext);
+    const [filteredLeads, setFilteredLeads] = useState([]);
     const history = useHistory();
 
     useEffect(() => {
         getAllLeads();
     }, [])
+
+    useEffect(() => {
+        if(searchTerms !== "") {
+            const subset = leads.filter(currentLead => currentLead.fullName.toLowerCase().includes(searchTerms) || currentLead.email.toLowerCase().includes(searchTerms))
+            setFilteredLeads(subset)
+        } else {
+            setFilteredLeads(leads)
+        }
+    }, [searchTerms, leads])
 
     return (
         <>
@@ -32,7 +42,7 @@ const LeadList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                {leads.map((lead) => (
+                {filteredLeads.map((lead) => (
                         <Lead key={lead.id} lead={lead} />
                     ))}
                 </tbody>

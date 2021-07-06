@@ -6,7 +6,7 @@ export const ClientContext = React.createContext();
 
 export const ClientProvider = (props) => {
   const [clients, setClients] = useState([]);
-  const [searchClient, setSearchClient] = useState("")
+  const [searchTerms, setSearchTerms] = useState("");
   const userProfile = JSON.parse(sessionStorage.getItem("userProfile"));
   const getToken = () => firebase.auth().currentUser.getIdToken();
 
@@ -52,12 +52,6 @@ export const ClientProvider = (props) => {
     }))       
 }
 
-  const findClient = (q) => {
-    return fetch(`${apiUrl}/search?q=${q}&sortDesc=true`)
-    .then((res) => res.json())
-    .then(setClients)
-  }
-
   const getClient = (id) => {
       return getToken().then((token) => 
       fetch(`${apiUrl}/${id}`, {
@@ -92,7 +86,7 @@ export const ClientProvider = (props) => {
   }
 
   return (
-    <ClientContext.Provider value={{ clients, getAllClients, addClient, searchClient, setSearchClient, findClient, getClient, getCurrentUserClients, deleteClient, updateClient }}>
+    <ClientContext.Provider value={{ clients, getAllClients, addClient, getClient, getCurrentUserClients, deleteClient, updateClient, searchTerms, setSearchTerms }}>
       {props.children}
     </ClientContext.Provider>
   );

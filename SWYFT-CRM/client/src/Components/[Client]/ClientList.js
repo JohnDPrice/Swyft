@@ -1,17 +1,26 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ClientContext } from "../../providers/ClientProvider";
 import { Container, Button, Row, Col, Media, Table } from "reactstrap";
 import { useHistory } from "react-router-dom"
 import Client from "./Client";
 
 const ClientList = () => {
-
-    const { clients, getAllClients } = useContext(ClientContext);
+    const { clients, getAllClients, searchTerms, setSearchTerms } = useContext(ClientContext);
+    const [filteredClients, setFilteredClients] = useState([]);
     const history = useHistory();
 
     useEffect(() => {
         getAllClients();
     }, [])
+
+    useEffect(() => {
+        if(searchTerms !== "") {
+            const subset = clients.filter(currentClient => currentClient.firstName.toLowerCase().includes(searchTerms) || currentClient.email.toLowerCase().includes(searchTerms))
+            setFilteredClients(subset)
+        } else {
+            setFilteredClients(clients)
+        }
+    }, [searchTerms, clients])
 
     return (
         <>
@@ -32,7 +41,7 @@ const ClientList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                {clients.map((client) => (
+                {filteredClients.map((client) => (
                         <Client key={client.id} client={client} />
                     ))}
                 </tbody>

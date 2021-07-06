@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import Login from "./Auth/Login";
@@ -12,6 +12,10 @@ import ClientList from "./[Client]/ClientList";
 import ClientDetails from "./[Client]/ClientDetails";
 import ClientForm from "./[Client]/ClientForm";
 import AppointmentCalendar from "./Appointment/Calendar";
+import AppointmentDetails from "./Appointment/AppointmentDetails";
+import AppointmentForm from "./Appointment/AppointmentForm";
+import ClientSearch from "./[Client]/ClientSearch";
+import LeadSearch from "./Lead/LeadSearch";
 
 export default function ApplicationViews() {
   const { isLoggedIn } = useContext(UserProfileContext);
@@ -32,6 +36,7 @@ export default function ApplicationViews() {
         </Route>
 
         <Route path="/leads">
+          <LeadSearch />
           <LeadList />
         </Route>
 
@@ -48,6 +53,7 @@ export default function ApplicationViews() {
         </Route>
 
         <Route path="/clients">
+          <ClientSearch />
           <ClientList />
         </Route>
 
@@ -65,6 +71,14 @@ export default function ApplicationViews() {
 
         <Route exact path="/appointments">
           <AppointmentCalendar/>
+        </Route>
+
+        <Route exact path="/appointment/add">
+          <AppointmentForm />
+        </Route>
+
+        <Route exact path="/appointment/:id">
+          <AppointmentDetails />
         </Route>
       </Switch>
     </main>
