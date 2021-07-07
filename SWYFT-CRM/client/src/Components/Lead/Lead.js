@@ -3,8 +3,7 @@ import { useParams } from "react-router-dom";
 import { Card, CardTitle, CardImg, CardBody, Badge, Button,  Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Link, useHistory } from "react-router-dom"
 import { LeadContext } from "../../providers/LeadProvider";
-import { FaEdit } from "react-icons/fa";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaEdit } from "react-icons/fa";
 
 const Lead = ({ lead }) => {
   const [ modal, setModal ] = useState(false)

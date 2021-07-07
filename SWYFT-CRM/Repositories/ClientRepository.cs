@@ -22,7 +22,7 @@ namespace SWYFT_CRM.Repositories
                 {
                     cmd.CommandText = @"
                 SELECT l.Id AS LeadId, 
-                    l.FirstName, l.LastName, 
+                    l.FirstName, l.LastName,
                     l.Email,
                     l.LeadStatusId, l.UserProfileId,
                     l.Client,
