@@ -120,9 +120,9 @@ namespace SWYFT_CRM.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO Appointment Title, (Start), (End), Allday, Notes, LeadId, UserProfileId
+                    cmd.CommandText = @"INSERT INTO Appointment (Title, [Start], [End], Allday, Notes, LeadId, UserProfileId)
                                         OUTPUT INSERTED.ID
-                                        VALUES @Title, (@Start), (@End), @AllDay, @Notes, @LeadId, @UserProfileId";
+                                        VALUES (@Title, @Start, @End, @AllDay, @Notes, @LeadId, @UserProfileId)";
                     DbUtils.AddParameter(cmd, "@Title", appointment.Title);
                     DbUtils.AddParameter(cmd, "@Start", appointment.Start);
                     DbUtils.AddParameter(cmd, "@End", appointment.End);
